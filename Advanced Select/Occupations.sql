@@ -1,16 +1,14 @@
-WITH OccupationRank AS (
-    SELECT 
-        NAME, 
-        OCCUPATION,
-        ROW_NUMBER() OVER (PARTITION BY OCCUPATION ORDER BY NAME) AS RowNum
-    FROM OCCUPATIONS
-)
-
 SELECT 
-    MAX(CASE WHEN OCCUPATION = 'Doctor' THEN NAME END) AS Doctor,
-    MAX(CASE WHEN OCCUPATION = 'Professor' THEN NAME END) AS Professor,
-    MAX(CASE WHEN OCCUPATION = 'Singer' THEN NAME END) AS Singer,
-    MAX(CASE WHEN OCCUPATION = 'Actor' THEN NAME END) AS Actor
-FROM OccupationRank
-GROUP BY RowNum
-ORDER BY RowNum;
+    MAX(CASE WHEN Occupation = 'Doctor' THEN Name END) Doctor,
+    MAX(CASE WHEN Occupation = 'Professor' THEN Name END) Professor,
+    MAX(CASE WHEN Occupation = 'Singer' THEN Name END) Singer,
+    MAX(CASE WHEN Occupation = 'Actor' THEN Name END) Actor
+FROM (
+    SELECT 
+        Name,
+        Occupation,
+        ROW_NUMBER() OVER (PARTITION BY Occupation ORDER BY Name) rn
+    FROM OCCUPATIONS
+) t
+GROUP BY rn
+ORDER BY rn;
