@@ -1,4 +1,4 @@
 SELECT DISTINCT CITY
 FROM STATION
-WHERE LOWER(LEFT(CITY, 1)) IN ('a', 'e', 'i', 'o', 'u') and LOWER(RIGHT(CITY, 1)) IN ('a', 'e', 'i', 'o', 'u')
-ORDER BY CITY;
+WHERE LOWER(SUBSTR(CITY, 1, 1)) IN ('a','e','i','o','u')
+  AND LOWER(SUBSTR(CITY, LENGTH(CITY), 1)) IN ('a','e','i','o','u');
